@@ -3,63 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>brk | Denemelik Web Sitesi </title>
+    <title>Brk | Denemelik Site </title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background-color: #0d1117;
-            color: #c9d1d9;
+            background-color: #0a0c10;
+            color: #f0f6fc;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
             padding: 20px;
         }
 
+        /* Arka Plan Hareketli Şekiller ve Parıltılar */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(88, 166, 255, 0.25);
+            top: 10%;
+            left: 15%;
+        }
+
+        .shape-2 {
+            width: 350px;
+            height: 350px;
+            background: rgba(188, 140, 255, 0.2);
+            bottom: 10%;
+            right: 15%;
+            animation-delay: -4s;
+        }
+
+        .cube {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            z-index: 0;
+            animation: rotateCube 12s linear infinite;
+        }
+
+        .cube-1 { width: 80px; height: 80px; top: 20%; right: 20%; }
+        .cube-2 { width: 120px; height: 120px; bottom: 15%; left: 10%; animation-duration: 18s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        @keyframes rotateCube {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Ana Kart */
         .card {
-            background-color: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 16px;
+            position: relative;
+            z-index: 1;
+            background: rgba(22, 27, 34, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
             width: 100%;
-            max-width: 450px;
-            padding: 32px;
+            max-width: 480px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
         }
 
         .avatar {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             background: linear-gradient(135deg, #58a6ff, #bc8cff);
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
+            font-size: 32px;
             font-weight: bold;
-            color: #ffffff;
+            color: #fff;
+            box-shadow: 0 0 25px rgba(88, 166, 255, 0.4);
         }
 
         h1 {
-            color: #f0f6fc;
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 26px;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(88, 166, 255, 0.15);
+            color: #58a6ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            border: 1px solid rgba(88, 166, 255, 0.3);
         }
 
         p.bio {
             color: #8b949e;
             font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.5;
+            line-height: 1.6;
+            margin-bottom: 28px;
         }
 
+        /* Yetenek / İlgi Kutuları */
+        .tags {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #c9d1d9;
+        }
+
+        /* Linkler */
         .links {
             display: flex;
             flex-direction: column;
@@ -67,34 +152,57 @@
         }
 
         .btn {
-            background-color: #21262d;
-            color: #58a6ff;
+            background: #21262d;
+            color: #f0f6fc;
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            border: 1px solid #30363d;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 600;
-            transition: all 0.2s ease;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .btn:hover {
-            background-color: #30363d;
+            background: #30363d;
             border-color: #58a6ff;
-            transform: translateY(-2px);
+            color: #58a6ff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(88, 166, 255, 0.15);
         }
     </style>
 </head>
 <body>
 
+    <!-- Arka Plan Hareketli Elemanları -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="cube cube-1"></div>
+    <div class="cube cube-2"></div>
+
+    <!-- Ana Kart -->
     <div class="card">
         <div class="avatar">B</div>
         <h1>Merhaba</h1>
-        <p class="bio">Bu siteye neden girme isteği duydunuz acaba? </p>
+        <div class="badge">Online</div>
+        <p class="bio">Deneme</p>
         
+        <!-- Etiketler -->
+        <div class="tags">
+            <span class="tag">🎮 Gaming</span>
+            <span class="tag">💻 Hardware</span>
+            <span class="tag">⚡ Web Dev</span>
+        </div>
+
+        <!-- Butonlar -->
         <div class="links">
-            <a href="https://kick.com/cordiseps" class="btn">Instagram</a>
-            <a href="https://www.itemsatis.com/profil/dutdutburak.html" class="btn">Discord Server</a>
-            <a href="https://paylasimlihesap.com/" class="btn">Steam Profili</a>
+            <a href="https://steamcommunity.com" target="_blank" class="btn">https://steamcommunity.com/profiles/76561199390764431/</a>
+            <a href="https://www.tiktok.com/" target="_blank" class="btn">https://www.tiktok.com/@burak.tsdn</a>
+            <a href="https://instagram.com" target="_blank" class="btn">https://www.instagram.com/burak.tsdn/</a>
         </div>
     </div>
 
